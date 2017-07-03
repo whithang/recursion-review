@@ -20,8 +20,16 @@ var stringifyJSON = function(obj) {
     }
     return '[' + result.join(',') + ']';
   } else if (typeObj === 'function' || obj === undefined) {
-    // return nothing
+    return;
   } else {
-
+    var result = [];
+    for (var key in obj) {
+      var keyString = stringifyJSON(obj[key]);
+      if (keyString === undefined) {
+        continue;
+      }
+      result.push(stringifyJSON(key) + ':' + keyString);
+    }
+    return '{' + result.join(',') + '}';
   }
 };
